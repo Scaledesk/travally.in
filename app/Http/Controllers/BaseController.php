@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\libraries\Messages;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Validation\Factory;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -22,13 +19,17 @@ class BaseController extends Controller
 
     }
     public function success($message='success',$status_code=200){
-        return $this->response()->array([
+        /*return $this->response()->array([
             'message'=>$message,
             'status_code'=>$status_code
-        ])->statusCode($status_code);
+        ])->statusCode($status_code);*/
+        return [
+          'message' =>$message,
+            'status_code' =>$status_code
+        ];
     }
 
-    public function successWithData($message='success',$status_code=200){
+    /*public function successWithData($message='success',$status_code=200){
         if($message==""){
             $message="success";
         }
@@ -54,18 +55,24 @@ class BaseController extends Controller
             'status_code'=>$status_code,
             key(func_get_arg(2))=>func_get_arg(2)[key(func_get_arg(2))]
         ])->statusCode($status_code);
-    }
+    }*/
     /**
      * error response method with default message and error code
      */
     public function error($message='error',$status_code=404){
-        return $this->response()->array([
+        return [
+          'message'=>$message,
+            'status_code'=>$status_code
+        ];
+
+
+            /*$this->response()->array([
             'message'=>$message,
             'status_code'=>$status_code
-        ])->statusCode($status_code);
+        ])->statusCode($status_code);*/
     }
 
-    public function my_validate($data_array){
+   /* public function my_validate($data_array){
         $validate=Validator::make($data_array['data'],$data_array['rules'],$data_array['messages']);
         if($validate->fails()){
             return ['result'=>false,'error'=>$this->error(Messages::showErrorMessages($validate),422)];
@@ -80,5 +87,5 @@ class BaseController extends Controller
         $resource->setCursor($cursor);
         $rootScope = $this->fractal->createData($resource);
         return $this->respondWithArray($rootScope->toArray());
-    }
+    }*/
 }

@@ -6,13 +6,14 @@
  * Time: 5:11 PM
  */
 
-namespace app\libraries\transformers;
+namespace app\libraries\transformer;
 
 use App\Adv;
+use App\libraries\transformer\Transformer;
 use Illuminate\Support\Facades\Input;
 
 
-class AdvTransformer extends Transformers
+class AdvTransformer extends Transformer
 {
     public function transform($data){
         return [

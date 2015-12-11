@@ -1,15 +1,38 @@
 <?php
 
+/**
+ * Created by PhpStorm.
+ * User: Javed
+ * Date: 11/12/15
+ * Time: 5:11 PM
+ */
 namespace App\Http\Controllers;
-
+use App\libraries\transformer\AdvTransformer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Adv;
 use Illuminate\Support\Facades\Validator;
-class AdvController extends Controller
+
+
+
+
+
+class AdvController extends BaseController
 {
+
+
+
+    protected $AdvTransformer;
+
+    function __construct()
+    {
+        $this->AdvTransformer = new AdvTransformer();
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +41,9 @@ class AdvController extends Controller
     public function index()
     {
         //
+        $adv= Adv::all()->toArray();
+        return $this->AdvTransformer->transformCollection($adv);
+
     }
 
     /**
@@ -39,7 +65,7 @@ class AdvController extends Controller
     public function store(Request $request)
     {
         //
-        $data=$this->Adv_transformer->requestAdaptor();
+        $data=$this->AdvTransformer->requestAdaptor();
         $validator=Validator::make($data,[
             Adv::IMG_URL=>'required',
             Adv::URL=>'required',
@@ -52,15 +78,22 @@ class AdvController extends Controller
                 Adv::DESC.'.required'=>'advertisement description is required try description=<description>',
                 Adv::LOCATION.'.required'=>'advertisement location is required try location=<location>',
             ]);
+
+
         if($validator->passes()){
             $insert=function($data){
                 $advs=new Adv($data);
                 return  $advs->save()?$this->success():$this->error('unknown error occurred',520);
             };
+
+
+
+
             return $insert($data);
             }
         else{
-            return $this->error('some error occurred',422);
+            return $validator->messages();
+            //return $this->error('some error occurred',422);
         }
     }
 
@@ -73,6 +106,14 @@ class AdvController extends Controller
     public function show($id)
     {
         //
+        $adv=Adv::find($id);
+        if(!$adv){
+            return $this->error('advertisement not exist',422);
+        }
+        else{
+            return $this->AdvTransformer->transform($adv);
+        }
+
     }
 
     /**
@@ -96,6 +137,22 @@ class AdvController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $data = $this->AdvTransformer->requestAdaptor();
+        $data=array_filter($data,'strlen'); // filter blank or null array
+        $adv = Adv::find($id);
+        if(!$adv)
+        {
+            return $this->error('calendar event does not exist to update',420);
+        }
+        else{
+            $adv->update($data);
+            return $this->success('advertisement updated successfully',200);
+        }
+
+
+
+
+
     }
 
     /**
@@ -107,5 +164,15 @@ class AdvController extends Controller
     public function destroy($id)
     {
         //
+
+        if(Adv::destroy($id))
+        {
+            return $this->success('advertisement deleted successfully',200);
+        }
+        else{
+            return $this->error('Advertisement does not exist');
+        }
+
+
     }
 }
