@@ -42,8 +42,8 @@ class AdvController extends BaseController
     {
         //
         $adv= Adv::all()->toArray();
+        //return Adv::paginate(2);
         return $this->respond($this->AdvTransformer->transformCollection($adv));
-
     }
 
     /**
@@ -78,7 +78,6 @@ class AdvController extends BaseController
                 Adv::DESC.'.required'=>'advertisement description is required try description=<description>',
                 Adv::LOCATION.'.required'=>'advertisement location is required try location=<location>',
             ]);
-
 
         if($validator->passes()){
             $insert=function($data){

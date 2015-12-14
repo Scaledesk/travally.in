@@ -55,7 +55,6 @@ class BaseController extends Controller
      */
     public function respond($data, $headers = [])
     {
-
         return Response::json($data, $this->getStatusCode(), $headers);
     }
 
