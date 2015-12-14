@@ -42,7 +42,7 @@ class AdvController extends BaseController
     {
         //
         $adv= Adv::all()->toArray();
-        return $this->AdvTransformer->transformCollection($adv);
+        return $this->respond($this->AdvTransformer->transformCollection($adv));
 
     }
 
@@ -83,16 +83,13 @@ class AdvController extends BaseController
         if($validator->passes()){
             $insert=function($data){
                 $advs=new Adv($data);
-                return  $advs->save()?$this->success():$this->error('unknown error occurred',520);
+                return  $advs->save()?$this->respondCreated('advertisement created successfully'):$this->respondValidationError('some error occurred');
             };
-
-
-
-
             return $insert($data);
             }
         else{
-            return $validator->messages();
+            return $this->respondValidationError($validator->messages());
+            //return $validator->messages();
             //return $this->error('some error occurred',422);
         }
     }
@@ -108,10 +105,10 @@ class AdvController extends BaseController
         //
         $adv=Adv::find($id);
         if(!$adv){
-            return $this->error('advertisement not exist',422);
+            return $this->respondNotFound('advertisement not exist');
         }
         else{
-            return $this->AdvTransformer->transform($adv);
+            return $this->respond($this->AdvTransformer->transform($adv));
         }
 
     }
@@ -142,11 +139,11 @@ class AdvController extends BaseController
         $adv = Adv::find($id);
         if(!$adv)
         {
-            return $this->error('calendar event does not exist to update',420);
+            return $this->respondNotFound('calendar event does not exist to update');
         }
         else{
             $adv->update($data);
-            return $this->success('advertisement updated successfully',200);
+            return $this->respondDeleted('advertisement updated successfully');
         }
 
 
@@ -167,10 +164,10 @@ class AdvController extends BaseController
 
         if(Adv::destroy($id))
         {
-            return $this->success('advertisement deleted successfully',200);
+            return $this->respondDeleted('advertisement deleted successfully');
         }
         else{
-            return $this->error('Advertisement does not exist');
+            return $this->respondNotFound('Advertisement does not exist');
         }
 
 
