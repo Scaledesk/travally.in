@@ -16,6 +16,7 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
+
     /**
      * The database table used by the model.
      *
@@ -36,4 +37,8 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function profiles(){
+        return $this->hasOne('App\Profile','travally_profiles_user_id');
+    }
 }

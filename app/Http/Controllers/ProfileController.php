@@ -2,43 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use app\libraries\transformer\ProfileTransformer;
 use Illuminate\Http\Request;
-
+use App\User;
+use App\Profiles;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    protected $ProfileTransformer;
+
+    function __construct()
     {
-        //
+        $this->ProfileTransformer = new ProfileTransformer();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -49,18 +29,11 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
+        $user=User::find($id);
+        dd($user->profiles());
+        return $this->respond($user->profiles());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -71,7 +44,25 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /**
+         * Update profile
+         */
+        $data = $this->ProfileTransformer->requestAdaptor();
+        $data=array_filter($data,'strlen'); // filter blank or null array
+        if(sizeof($data)){ try{$result=$this->auth()->user()->profiles()->update($data);}catch(\Exception $e){
+            return $this->respondValidationError($e->getMessage());
+        }
+        }else{
+            return $this->respondValidationError('no adequate field passed');
+        }
+        if($result)
+        {
+            return $this->respondCreated('updated successfully');
+        }
+        else
+        {
+            return $this->respondValidationError('Unknown error');
+        }
     }
 
     /**
