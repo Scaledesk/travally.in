@@ -9,20 +9,14 @@
 namespace App\Http\Controllers;
 use App\libraries\transformer\AdvTransformer;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Adv;
 use Illuminate\Support\Facades\Validator;
 
 
-
-
-
 class AdvController extends BaseController
 {
-
-
 
     protected $AdvTransformer;
 
@@ -30,9 +24,6 @@ class AdvController extends BaseController
     {
         $this->AdvTransformer = new AdvTransformer();
     }
-
-
-
     /**
      * Display a listing of the resource.
      *

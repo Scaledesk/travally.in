@@ -6,13 +6,10 @@
  * Time: 5:11 PM
  */
 namespace App\Http\Controllers;
-use App\libraries\Messages;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response as IlluminateResponse;
 class BaseController extends Controller
 {
@@ -55,7 +52,11 @@ class BaseController extends Controller
      */
     public function respond($data, $headers = [])
     {
-        return Response::json($data, $this->getStatusCode(), $headers);
+        return Response::json([
+            'data' =>$data,
+            'status code'=>$this->getStatusCode(),
+            'header'=>$headers
+        ]);
     }
 
     /**
@@ -77,8 +78,7 @@ class BaseController extends Controller
     public function respondWithError($message)
     {
         return $this->respond([
-                'message' => $message,
-                'status_code' => $this->getStatusCode()
+                'message' => $message
             ]);
     }
 
@@ -90,7 +90,7 @@ class BaseController extends Controller
     protected function respondCreated($message)
     {
         return $this->setStatusCode(IlluminateResponse::HTTP_CREATED)
-            ->respond(['message' => $message, 'status_code' => $this->getStatusCode()]);
+            ->respond(['message' => $message]);
     }
 
     /**
@@ -101,7 +101,7 @@ class BaseController extends Controller
     protected function respondDeleted($message)
     {
         return $this->setStatusCode(IlluminateResponse::HTTP_OK)
-            ->respond(['message' => $message, 'status_code' => $this->getStatusCode()]);
+            ->respond(['message' => $message]);
     }
 
 
@@ -134,24 +134,4 @@ class BaseController extends Controller
         ]);
         return $this->respond($data);
     }
-
-
-
-    /*public function success($message='success',$status_code=200){
-        return [
-          'message' =>$message,
-            'status_code' =>$status_code
-        ];
-    }*/
-
-
-    /**
-     * error response method with default message and error code
-     */
-    /*public function error($message='error',$status_code=404){
-        return [
-          'message'=>$message,
-            'status_code'=>$status_code
-        ];
-    }*/
 }
