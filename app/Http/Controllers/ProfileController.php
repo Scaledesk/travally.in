@@ -1,14 +1,17 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: Javed
+ * Date: 14/12/15
+ * Time: 3:11 PM
+ */
 namespace App\Http\Controllers;
-
-use app\libraries\transformer\ProfileTransformer;
+use app\Libraries\Transformer\ProfileTransformer;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profiles;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 class ProfileController extends BaseController
 {
 
@@ -64,7 +67,6 @@ class ProfileController extends BaseController
             return $this->respondValidationError('Unknown error');
         }
     }
-
     /**
      * Remove the specified resource from storage.
      *

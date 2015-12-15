@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\BaseController;
 use App\User;
-use Validator;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Log;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -33,33 +38,85 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+
+    public function verify($username, $password)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+        $credentials = [
+            'email'     => $username,
+            'password'  => $password
+            //'confirmed' => '1'
+        ];
+
+        if (Auth::once($credentials)) {
+            return Auth::user()->id;
+        }
+
+        return false;
     }
 
     /**
-     * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return User
+     * @param Request $request
+     *
+     * @return mixed
      */
-    protected function create(array $data)
+    public function google(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+
+        if ($request->has('redirectUri')) {
+            config()->set("services.google.redirect", $request->get('redirectUri'));
+        }
+
+        $provider = Socialite::driver('google');
+        $provider->stateless();
+
+        $profile      = $provider->user();
+        return $profile;
+        $email        = $profile->email;
+        $name         = $profile->name;
+        $google_token = $profile->token;
+        $google_id    = $profile->id;
+
+        $user = User::where('email', $email)
+            ->first();
+
+        if (is_null($user)) {
+            $data = [
+                'email'                             => $email,
+                'name'                              => $name,
+                'password'                          => null,
+                'confirmation_code'                 => null,
+                'confirmed'                         => '1',
+                'social_auth_provider_access_token' => $google_token,
+                'google_id'                         => $google_id,
+                'social_auth_provider'              => 'google',
+                'social_auth_provider_id'           => $google_id
+            ];
+            $user = User::create($data);
+
+            $response = Response::json($user);
+            return $response;
+        } else {
+            $user->social_auth_provider_access_token = $profile->token;
+            $user->social_auth_provider_id           = $profile->id;
+            $user->social_auth_provider              = 'google';
+            $user->save();
+            $response = Response::json($user);
+            return $response;
+        }
+
+    }
+
+    public function verify_social($social_auth_provider_id, $social_auth_provider_access_token)
+    {
+        $user = User::where('social_auth_provider_id', $social_auth_provider_id)
+            ->where('social_auth_provider_access_token', $social_auth_provider_access_token)
+            ->first();
+
+        if ($user) {
+            return $user->id;
+        }
+
+        return false;
     }
 }

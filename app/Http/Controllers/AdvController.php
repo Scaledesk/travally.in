@@ -7,7 +7,7 @@
  * Time: 5:11 PM
  */
 namespace App\Http\Controllers;
-use App\libraries\transformer\AdvTransformer;
+use App\Libraries\Transformer\AdvTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

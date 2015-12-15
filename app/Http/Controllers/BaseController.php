@@ -103,6 +103,11 @@ class BaseController extends Controller
         return $this->setStatusCode(IlluminateResponse::HTTP_OK)
             ->respond(['message' => $message]);
     }
+    protected function respondSuccess($message)
+    {
+        return $this->setStatusCode(IlluminateResponse::HTTP_OK)
+            ->respond(['message' => $message]);
+    }
 
 
     /**

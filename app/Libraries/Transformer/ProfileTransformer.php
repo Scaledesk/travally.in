@@ -6,10 +6,10 @@
  * Time: 5:11 PM
  */
 
-namespace app\libraries\transformer;
+namespace app\Libraries\Transformer;
 
 use App\Profiles;
-use App\libraries\transformer\Transformer;
+use App\Libraries\Transformer\Transformer;
 use Illuminate\Support\Facades\Input;
 
 
