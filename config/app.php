@@ -138,6 +138,9 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -194,6 +197,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'Authorizer' => LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
     ],

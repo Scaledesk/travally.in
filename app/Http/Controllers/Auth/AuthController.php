@@ -66,12 +66,10 @@ class AuthController extends BaseController
         if ($request->has('redirectUri')) {
             config()->set("services.google.redirect", $request->get('redirectUri'));
         }
-
         $provider = Socialite::driver('google');
         $provider->stateless();
 
         $profile      = $provider->user();
-        return $profile;
         $email        = $profile->email;
         $name         = $profile->name;
         $google_token = $profile->token;
@@ -85,10 +83,7 @@ class AuthController extends BaseController
                 'email'                             => $email,
                 'name'                              => $name,
                 'password'                          => null,
-                'confirmation_code'                 => null,
-                'confirmed'                         => '1',
                 'social_auth_provider_access_token' => $google_token,
-                'google_id'                         => $google_id,
                 'social_auth_provider'              => 'google',
                 'social_auth_provider_id'           => $google_id
             ];
