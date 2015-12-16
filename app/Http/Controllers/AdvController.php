@@ -23,6 +23,7 @@ class AdvController extends BaseController
     function __construct()
     {
         $this->AdvTransformer = new AdvTransformer();
+        $this->middleware('oauth');
     }
     /**
      * Display a listing of the resource.

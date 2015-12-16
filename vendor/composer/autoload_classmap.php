@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddProfilesTable' => $baseDir . '/database/migrations/2015_12_14_094354_add_profiles_table.php',
     'AddSocialFieldToProfileTable' => $baseDir . '/database/migrations/2015_12_16_070901_add_social_field_to_profile_table.php',
+    'AddSocialFieldToUserTable' => $baseDir . '/database/migrations/2015_12_16_095421_add_social_field_to_user_table.php',
     'CreateAdvsTable' => $baseDir . '/database/migrations/2015_12_11_103553_create_advs_table.php',
     'CreateOauthAccessTokenScopesTable' => $baseDir . '/database/migrations/2014_04_24_111657_create_oauth_access_token_scopes_table.php',
     'CreateOauthAccessTokensTable' => $baseDir . '/database/migrations/2014_04_24_111518_create_oauth_access_tokens_table.php',
@@ -98,6 +99,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+    'MakeSocialFieldNullableToUserTable' => $baseDir . '/database/migrations/2015_12_16_100227_make_social_field_nullable_to_user_table.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',

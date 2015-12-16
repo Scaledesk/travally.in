@@ -6,35 +6,35 @@
  * Time: 3:11 PM
  */
 namespace App\Http\Controllers;
-use app\Libraries\Transformer\ProfileTransformer;
+use App\Libraries\Transformer\ProfileTransformer;
 use Illuminate\Http\Request;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 use App\User;
-use App\Profiles;
+use App\Profile;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 class ProfileController extends BaseController
 {
-
     protected $ProfileTransformer;
 
     function __construct()
     {
         $this->ProfileTransformer = new ProfileTransformer();
+        $this->middleware('oauth');
     }
 
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getProfile()
     {
-        //
-        $user=User::find($id);
-        dd($user->profiles());
-        return $this->respond($user->profiles());
+        // function for getting profile
+        $user_id=Authorizer::getResourceOwnerId(); // the token user_id
+        $user=User::find($user_id);// get the user data from database
+        //return $user->profiles()->get();
+        return $this->respond($this->ProfileTransformer->transformCollection($user->profiles()->get()->toArray()));
     }
 
 
@@ -45,14 +45,18 @@ class ProfileController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         /**
          * Update profile
          */
         $data = $this->ProfileTransformer->requestAdaptor();
         $data=array_filter($data,'strlen'); // filter blank or null array
-        if(sizeof($data)){ try{$result=$this->auth()->user()->profiles()->update($data);}catch(\Exception $e){
+        if(sizeof($data)){ try{
+            $user_id=Authorizer::getResourceOwnerId(); // the token user_id
+            $user=User::find($user_id);
+            $result = $user->profiles()->update($data);
+        }catch(\Exception $e){
             return $this->respondValidationError($e->getMessage());
         }
         }else{

@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSocialFieldToProfileTable extends Migration
+class AddSocialFieldToUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddSocialFieldToProfileTable extends Migration
      */
     public function up()
     {
-        // added column to travally_profile table
-        Schema::table('travally_profiles', function ($table) {
+        //
+        Schema::table('users', function ($table) {
             $table->string('social_auth_provider_access_token',500);
             $table->string('social_auth_provider',50);
             $table->string('social_auth_provider_id',255);
@@ -27,8 +27,8 @@ class AddSocialFieldToProfileTable extends Migration
      */
     public function down()
     {
-        // drop column of travally_profile table
-        Schema::table('travally_profiles', function ($table) {
+        //
+        Schema::table('users', function ($table) {
             $table->dropColumn(['social_auth_provider_access_token', 'social_auth_provider', 'social_auth_provider_id']);
         });
     }

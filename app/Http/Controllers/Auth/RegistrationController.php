@@ -46,17 +46,24 @@ class RegistrationController extends BaseController
             'email'             => Input::get('email'),
             'password'          => Input::get('password'),
         ];
-        if ($this->validator($data)) {
-            $user = $this->create($data);
-            /*$activation_link = 'localhost:300\\activate\\' . $user->confirmation_code;
-            $this->dispatch(new SendRegistrationEmail($user));*/
-            return $this->respondSuccess('Registration Successfully');
+        try {
+            if ($this->validator($data)) {
+                $user = $this->create($data);
+                $user->profiles()->create([
+                    'travally_profiles_user_id' => $user->id,
+                    'travally_profiles_name' => $data['name']
+                ]);
+                /*$activation_link = 'localhost:300\\activate\\' . $user->confirmation_code;
+                $this->dispatch(new SendRegistrationEmail($user));*/
+                return $this->respondSuccess('Registration Successfully');
 //            return "Registration Successfull";
-        } else {
-            return $this->respondValidationError('Validation error');
+            } else {
+                return $this->respondValidationError('Validation error');
+            }
+        } catch(\Exception $e){
+            return $this->respondWithError($e->getMessage());
         }
     }
-
     /*public function confirm($confirmation_code)
     {
         if (!$confirmation_code) {

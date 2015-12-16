@@ -7,8 +7,7 @@
  */
 
 namespace app\Libraries\Transformer;
-
-use App\Profiles;
+use App\Profile;
 use App\Libraries\Transformer\Transformer;
 use Illuminate\Support\Facades\Input;
 
@@ -17,18 +16,18 @@ class ProfileTransformer extends Transformer
 {
     public function transform($data){
         return [
-            'Name'=>$data[Profiles::NAME],
-            'Address'=>$data[Profiles::ADDRESS],
-            'DOB'=>$data[Profiles::DOB],
-            'Image'=>$data[Profiles::IMAGE],
+            'Name'=>$data[Profile::NAME],
+            'Address'=>$data[Profile::ADDRESS],
+            'DOB'=>$data[Profile::DOB],
+            'Image'=>$data[Profile::IMAGE],
         ];
     }
     public function requestAdaptor(){
         return [
-            Profiles::NAME => Input::get('name',''),
-            Profiles::ADDRESS => Input::get('address',''),
-            Profiles::DOB => Input::get('dob',''),
-            Profiles::IMAGE => Input::get('image',''),
+            Profile::NAME => Input::get('name',''),
+            Profile::ADDRESS => Input::get('address',''),
+            Profile::DOB => Input::get('dob',''),
+            Profile::IMAGE => Input::get('image',''),
         ];
     }
 }
