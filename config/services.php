@@ -41,10 +41,10 @@ return [
         'client_secret' => getenv('GOOGLE_CLIENT_SECRET'),
         'redirect'      => /*getenv('GOOGLE_REDIRECT_URI')*/'http://localhost:3000/',
     ],
-    /*'facebook' => [
+    'facebook' => [
         'client_id'     => getenv('FACEBOOK_CLIENT_ID'),
         'client_secret' => getenv('FACEBOOK_CLIENT_SECRET'),
-        'redirect'      => /*getenv('GOOGLE_REDIRECT_URI')  'http://goblindesignstudio.com/',
-    ],*/
+        'redirect'      => /*getenv('GOOGLE_REDIRECT_URI') */'http://localhost:3000/',
+    ],
 
 ];

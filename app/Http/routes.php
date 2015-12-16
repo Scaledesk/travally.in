@@ -38,7 +38,7 @@ Route::post('auth/a', function() {
         return Response::json(Authorizer::issueAccessToken());
     });
 
-    Route::post('auth/git', 'Auth\AuthController@github');
     Route::post('auth/google', 'Auth\AuthController@google');
+    Route::post('auth/facebook', 'Auth\AuthController@facebook');
 
     Route::resource('adv','AdvController');

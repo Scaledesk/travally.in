@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Log;
-
 class AuthController extends BaseController
 {
     /*
@@ -83,24 +82,82 @@ class AuthController extends BaseController
                 'email'                             => $email,
                 'name'                              => $name,
                 'password'                          => null,
+            ];
+            $user = User::create($data);
+            $user->profiles()->create([
+                'travally_profiles_user_id'=>$user->id,
+                'travally_profiles_name'=>$name,
                 'social_auth_provider_access_token' => $google_token,
                 'social_auth_provider'              => 'google',
                 'social_auth_provider_id'           => $google_id
-            ];
-            $user = User::create($data);
-
-            $response = Response::json($user);
+            ]);
+            $response = Response::json($profile);
             return $response;
         } else {
-            $user->social_auth_provider_access_token = $profile->token;
+            /*$user->social_auth_provider_access_token = $profile->token;
             $user->social_auth_provider_id           = $profile->id;
             $user->social_auth_provider              = 'google';
-            $user->save();
-            $response = Response::json($user);
+            $user->save();*/
+            $response = Response::json($profile);
             return $response;
         }
 
     }
+
+    public function facebook(Request $request)
+    {
+
+        if ($request->has('redirectUri')) {
+            config()->set("services.facebook.redirect", $request->get('redirectUri'));
+        }
+        $provider = Socialite::driver('facebook');
+        $provider->stateless();
+
+        $profile      = $provider->user();
+        $email        = $profile->email;
+        $name         = $profile->name;
+        $facebook_token = $profile->token;
+        $facebook_id    = $profile->id;
+
+        $user = User::where('email', $email)
+            ->first();
+        if (is_null($user)) {
+            $data = [
+                'email'                             => $email,
+                'name'                              => $name,
+                'password'                          => null
+            ];
+            $user = User::create($data);
+            $user->profiles()->create([
+                'travally_profiles_user_id'=>$user->id,
+                'travally_profiles_name'=>$name,
+                'social_auth_provider_access_token' => $facebook_token,
+                'social_auth_provider'              => 'facebook',
+                'social_auth_provider_id'           => $facebook_id
+            ]);
+            $response = Response::json($profile);
+            return $response;
+        } else {
+            /*$user->social_auth_provider_access_token = $profile->token;
+            $user->social_auth_provider_id           = $profile->id;
+            $user->social_auth_provider              = 'facebook';
+            $user->save();*/
+            $response = Response::json($profile);
+            return $response;
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public function verify_social($social_auth_provider_id, $social_auth_provider_access_token)
     {

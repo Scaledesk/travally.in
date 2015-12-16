@@ -42,6 +42,11 @@ return [
             'class' => 'App\Libraries\Oauth2\Grants\SocialGrant',
             'callback' => '\App\Http\Controllers\Auth\AuthController@verify_social',
             'access_token_ttl' => 3600
+        ],
+        'facebook' => [
+            'class' => 'App\Libraries\Oauth2\Grants\SocialGrant',
+            'callback' => '\App\Http\Controllers\Auth\AuthController@verify_social',
+            'access_token_ttl' => 3600
         ]
     ],
 
