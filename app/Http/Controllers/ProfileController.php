@@ -34,7 +34,7 @@ class ProfileController extends BaseController
         $user_id=Authorizer::getResourceOwnerId(); // the token user_id
         $user=User::find($user_id);// get the user data from database
         //return $user->profiles()->get();
-        return $this->respond($this->ProfileTransformer->transformCollection($user->profiles()->get()->toArray()));
+        return $this->respond($this->ProfileTransformer->transform($user->profiles()->get()->first()));
     }
 
 
