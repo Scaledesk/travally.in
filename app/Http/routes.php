@@ -30,5 +30,6 @@ Route::post('auth/a', function() {
     Route::post('auth/facebook', 'Auth\AuthController@facebook');
     Route::get('getProfile', 'ProfileController@getProfile');
     Route::PUT('profileUpdate', 'ProfileController@update');
+    Route::post('changePassword', 'Auth\PasswordController@changePassword');
     Route::resource('adv','AdvController');
 

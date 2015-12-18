@@ -50,12 +50,11 @@ class BaseController extends Controller
      * @param array $headers
      * @return mixed
      */
-    public function respond($data, $headers = [])
+    public function respond($data)
     {
         return Response::json([
             'data' =>$data,
-            'status code'=>$this->getStatusCode(),
-            'header'=>$headers
+            'status code'=>$this->getStatusCode()
         ]);
     }
 

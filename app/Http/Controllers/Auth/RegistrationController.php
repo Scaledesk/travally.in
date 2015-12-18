@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 class RegistrationController extends BaseController
@@ -41,6 +42,8 @@ class RegistrationController extends BaseController
         //$confirmation_code = str_random(30);
 
 
+        $name = Input::get('name');
+        $email = Input::get('email');
         $data = [
             'name'              => Input::get('name'),
             'email'             => Input::get('email'),
@@ -53,13 +56,25 @@ class RegistrationController extends BaseController
                     'travally_profiles_user_id' => $user->id,
                     'travally_profiles_name' => $data['name']
                 ]);
-                /*$activation_link = 'localhost:300\\activate\\' . $user->confirmation_code;
-                $this->dispatch(new SendRegistrationEmail($user));*/
+                try{
+                set_time_limit(60);
+                Mail::send('emails.Welcome',array('name'=>$name), function ($message)use($name,$email) {
+                    $message->to($email,$name)->subject('Welcome Message');
+                });
+                }catch(\Exception $e){
+                    return $this->respondWithError($e->getMessage());
+                }
+
+
                 return $this->respondSuccess('Registration Successfully');
+
 //            return "Registration Successfull";
             } else {
                 return $this->respondValidationError('Validation error');
             }
+
+
+
         } catch(\Exception $e){
             return $this->respondWithError($e->getMessage());
         }

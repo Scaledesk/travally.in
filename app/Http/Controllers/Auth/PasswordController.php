@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use Illuminate\Support\Facades\Input;
+use App\User;
 
-class PasswordController extends Controller
+class PasswordController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -27,6 +31,27 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('oauth');
+    }
+
+    /**
+     * function for change password
+     * @Author Javed
+     */
+
+
+    public function changePassword(){
+        $old_password = bcrypt(Input::get('old_password'));
+        $new_password = Input::get('new_password');
+        $user_id=Authorizer::getResourceOwnerId(); // the token user_id
+        $user=User::find($user_id);// get the user data from database
+        if($old_password==$user->password){
+            $user->password=$new_password;
+            $user->save();
+           return $this->respondSuccess('you have successfully updated your password');
+        }
+        else{
+            return $this->respondValidationError('old passwword does not match');
+        }
     }
 }
