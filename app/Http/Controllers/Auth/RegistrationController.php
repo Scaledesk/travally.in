@@ -35,13 +35,14 @@ class RegistrationController extends BaseController
         ]);
     }
 
+    /**
+     * function for new user registration
+     * @return mixed
+     * @Author Javed
+     */
+
     public function register()
     {
-//        $enabled_registrations = [2];
-
-        //$confirmation_code = str_random(30);
-
-
         $name = Input::get('name');
         $email = Input::get('email');
         $data = [
@@ -78,6 +79,7 @@ class RegistrationController extends BaseController
     /**
      * function for sending password reset link
      * @return mixed
+     * @Author Javed
      */
 
     public function forgotPassword(){
@@ -108,6 +110,7 @@ class RegistrationController extends BaseController
     /**
      * function for reset password
      * @return mixed
+     * @Author Javed
      */
     public function resetPassword(){
         $str='';

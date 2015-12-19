@@ -29,6 +29,7 @@ class AdvController extends BaseController
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @Author Javed
      */
     public function index()
     {
@@ -53,6 +54,7 @@ class AdvController extends BaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     * @Author Javed
      */
     public function store(Request $request)
     {
@@ -90,6 +92,7 @@ class AdvController extends BaseController
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @Author Javed
      */
     public function show($id)
     {
@@ -121,6 +124,7 @@ class AdvController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @Author Javed
      */
     public function update(Request $request, $id)
     {

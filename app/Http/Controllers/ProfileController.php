@@ -27,6 +27,7 @@ class ProfileController extends BaseController
     /**
      * Display the specified resource.
      * @return \Illuminate\Http\Response
+     * @Author Javed
      */
     public function getProfile()
     {
@@ -49,6 +50,7 @@ class ProfileController extends BaseController
     {
         /**
          * Update profile
+         * @Author Javed
          */
         $data = $this->ProfileTransformer->requestAdaptor();
         $data=array_filter($data,'strlen'); // filter blank or null array

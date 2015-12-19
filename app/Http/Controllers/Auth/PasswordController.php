@@ -36,12 +36,12 @@ class PasswordController extends BaseController
         $this->middleware('oauth');
     }
 
+
     /**
      * function for change password
+     * @return mixed
      * @Author Javed
      */
-
-
     public function changePassword(){
         $old_password = Input::get('old_password');
         $new_password = Input::get('new_password');
