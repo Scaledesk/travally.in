@@ -64,40 +64,84 @@ class RegistrationController extends BaseController
                 }catch(\Exception $e){
                     return $this->respondWithError($e->getMessage());
                 }
-
-
                 return $this->respondSuccess('Registration Successfully');
-
 //            return "Registration Successfull";
             } else {
                 return $this->respondValidationError('Validation error');
             }
-
-
-
         } catch(\Exception $e){
             return $this->respondWithError($e->getMessage());
         }
     }
-    /*public function confirm($confirmation_code)
-    {
-        if (!$confirmation_code) {
-            return "error";
+
+
+    /**
+     * function for sending password reset link
+     * @return mixed
+     */
+
+    public function forgotPassword(){
+        $email=Input::get('email');
+        if($email==''){
+            return $this->respondValidationError('Email not provided, try email=<your email>');
         }
-
-        $user = User::whereConfirmationCode($confirmation_code)
-            ->first();
-
-        if (!$user) {
-            return "error";
+//        $code='';
+        // check if email exist in database
+        if(User::where('email','=',$email)->first(['id'])){
+            $code= str_random(30); // make random code
+            User::where('email','=',$email)->update(['forgot_password_code'=>$code]); //code store in database
+        }else{
+            return $this->respondNotFound('Email does not match any records'); // error message on email not found
         }
+        try {
+            set_time_limit(60); //increase the timeout of php to send mail
+            Mail::send('emails.forgotPassword', array('forgot_password_code' => $code), function ($message) {
+                $message->to(Input::get('email'))
+                    ->subject('Forgot Password');
+            });
+        }catch(\Exception $e){
+            return $this->respondWithError($e->getMessage());
+        }
+        return $this->respondSuccess('Success! Reset password link sent');
+    }
 
-        $user->confirmed         = 1;
-        $user->confirmation_code = null;
-        $user->save();
-
-        $this->dispatch(new SendConfirmationEmail($user));
-
-        return "confirmed";
-    }*/
+    /**
+     * function for reset password
+     * @return mixed
+     */
+    public function resetPassword(){
+        $str='';
+        $code=Input::get('forgot_password_code','');
+        $password=Input::get('password','');
+        $password_confirmation=Input::get('password_confirmation','');
+        $check_for_password_match=true;
+        if($code==''){
+            $str.='Code not provided, try forgot_password_code=<your code>';
+        }
+        if($password==''){
+            $str.='<br/>password not provided, try password=<your password><br/>';
+            $check_for_password_match=false;
+        }
+        if($password_confirmation==''){
+            $str.='<br/>password_confirmation not provided, try password_confirmation=<your confirm password><br/>';
+            $check_for_password_match=false;
+        }
+        if($check_for_password_match){
+            if($password!=$password_confirmation){
+                $str.='<br/>password and password_confirmation do not match<br/>';
+            }
+        }
+        if($str!=''){
+            return $this->respondValidationError($str);
+        }
+        try {
+            User::where('forgot_password_code', '=', $code)->update([
+                'password' => bcrypt($password),
+                'forgot_password_code' => NULL
+            ]);
+            return $this->respondSuccess('successfully reset password');
+        }catch(\Exception $e){
+            return $this->respondWithError($e->getMessage());
+        }
+    }
 }

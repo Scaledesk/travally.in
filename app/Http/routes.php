@@ -31,5 +31,7 @@ Route::post('auth/a', function() {
     Route::get('getProfile', 'ProfileController@getProfile');
     Route::PUT('profileUpdate', 'ProfileController@update');
     Route::post('changePassword', 'Auth\PasswordController@changePassword');
+    Route::post('forgotPassword', 'Auth\RegistrationController@forgotPassword');
+    Route::post('resetForgotPassword', 'Auth\RegistrationController@resetPassword');
     Route::resource('adv','AdvController');
 
