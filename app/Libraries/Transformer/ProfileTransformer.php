@@ -15,12 +15,24 @@ use Illuminate\Support\Facades\Input;
 class ProfileTransformer extends Transformer
 {
     public function transform($data){
+
         return [
+            'Name'=>$data['name'],
+            'Email'=>$data['email'],
+            'DOB'=>$data['profiles'][Profile::DOB],
+            'Address'=>$data['profiles'][Profile::ADDRESS],
+            'Image'=>$data['profiles'][Profile::IMAGE],
+            'join_date'=>$data['created_at'],
+            'provider'=>$data['social_auth_provider'],
+        ];
+
+        /*return [
             'Name'=>$data[Profile::NAME],
             'Address'=>$data[Profile::ADDRESS],
             'DOB'=>$data[Profile::DOB],
             'Image'=>$data[Profile::IMAGE],
-        ];
+            'joined'=>$data['created_at']
+        ];*/
     }
     public function requestAdaptor(){
         return [

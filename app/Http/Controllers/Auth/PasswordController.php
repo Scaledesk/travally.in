@@ -49,7 +49,7 @@ class PasswordController extends BaseController
         $user=User::find($user_id);// get the user data from database
         try{
             if(Hash::check($old_password, $user->password)){
-                $user->password=$new_password;
+                $user->password=bcrypt($new_password);
                 $user->save();
                 return $this->respondSuccess('you have successfully updated your password');
             }

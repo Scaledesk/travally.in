@@ -134,15 +134,20 @@ class RegistrationController extends BaseController
                 $str.='<br/>password and password_confirmation do not match<br/>';
             }
         }
+
         if($str!=''){
             return $this->respondValidationError($str);
         }
         try {
-            User::where('forgot_password_code', '=', $code)->update([
+            if(User::where('forgot_password_code', '=', $code)->update([
                 'password' => bcrypt($password),
                 'forgot_password_code' => NULL
-            ]);
-            return $this->respondSuccess('successfully reset password');
+            ])){
+                return $this->respondSuccess('successfully reset password');
+            }
+            else{
+                return $this->respondSuccess('this link expire for resend password reset link ');
+            }
         }catch(\Exception $e){
             return $this->respondWithError($e->getMessage());
         }

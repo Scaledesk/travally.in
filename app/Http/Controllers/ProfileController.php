@@ -16,7 +16,6 @@ use App\Http\Controllers\Controller;
 class ProfileController extends BaseController
 {
     protected $ProfileTransformer;
-
     function __construct()
     {
         $this->ProfileTransformer = new ProfileTransformer();
@@ -31,27 +30,21 @@ class ProfileController extends BaseController
      */
     public function getProfile()
     {
-        // function for getting profile
+        // function for getting profile 
         $user_id=Authorizer::getResourceOwnerId(); // the token user_id
-        $user=User::find($user_id);// get the user data from database
-        //return $user->profiles()->get();
-        return $this->respond($this->ProfileTransformer->transform($user->profiles()->get()->first()));
+        $user = User::with('profiles')->find($user_id);// get the user data from database
+        return $this->respond($this->ProfileTransformer->transform($user));
     }
 
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @Author Javed
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-        /**
-         * Update profile
-         * @Author Javed
-         */
         $data = $this->ProfileTransformer->requestAdaptor();
         $data=array_filter($data,'strlen'); // filter blank or null array
         if(sizeof($data)){ try{
