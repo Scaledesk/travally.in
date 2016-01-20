@@ -10,7 +10,8 @@
         "lucadegasperi/oauth2-server-laravel": "5.0.*",
         "barryvdh/laravel-cors": "0.7.x",
         "guzzlehttp/guzzle" : "^6.1",
-        "laravel/socialite": "2.0.*@dev"
+        "laravel/socialite": "2.0.*@dev",
+        "doctrine/dbal":"^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

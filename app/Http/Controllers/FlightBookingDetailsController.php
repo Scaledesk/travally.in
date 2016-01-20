@@ -12,7 +12,7 @@ use App\Libraries\Transformer\FlightBookingDetailsTransformer;
 use App\Http\Requests;
 use App\FlightBookingDetails;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Validator;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class FlightBookingDetailsController extends BaseController
@@ -37,11 +37,12 @@ class FlightBookingDetailsController extends BaseController
     {
         //
         $user_id=Authorizer::getResourceOwnerId(); // the token user_id
-//        $flightBookinDetails = User::find($user_id)->flightBookingDetails();
-//        return $this->respond($this->ProfileTransformer->transform($user));
-        return User::find($user_id)->flightBookingDetails();
+        $flightBookingDetails = User::find($user_id)->flightBookingDetails()->get();
+        return $this->respond($this->FlightBookingDetailsTransformer->transformCollection($flightBookingDetails->toArray()));
+        //return User::find($user_id)->flightBookingDetails()->get();
     }
-
+//travally_user_flight_booking_details_source
+//travally_user_flight_booking_details_source
     /**
      * Show the form for creating a new resource.
      *

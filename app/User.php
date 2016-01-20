@@ -43,6 +43,6 @@ class User extends Model implements AuthenticatableContract,
     }
     public function flightBookingDetails()
     {
-        return $this->hasMany('App\FlightBookingDetails', 'travally_user_flight_booking_details_user_id');
+        return $this->hasMany('App\FlightBookingDetails', 'user_id');
     }
 }

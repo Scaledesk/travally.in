@@ -32,4 +32,6 @@ Route::post('auth/a', function() {
     Route::post('changePassword', 'Auth\PasswordController@changePassword');
     Route::post('forgotPassword', 'Auth\RegistrationController@forgotPassword');
     Route::post('resetForgotPassword', 'Auth\RegistrationController@resetPassword');
+    Route::get('getFlightBookingDetails', 'FlightBookingDetailsController@index');
+    Route::post('addFlightBooking', 'FlightBookingDetailsController@store');
     Route::resource('adv','AdvController');

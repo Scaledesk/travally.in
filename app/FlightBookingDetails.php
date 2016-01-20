@@ -40,7 +40,7 @@ class FlightBookingDetails extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'travally_user_flight_booking_details_user_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
 

@@ -5,9 +5,9 @@
  * Date: 20/01/16
  * Time: 01:47 PM
  */
-
 namespace app\Libraries\Transformer;
 use App\FlightBookingDetails;
+use App\Libraries\Transformer\Transformer;
 use Illuminate\Support\Facades\Input;
 
 
