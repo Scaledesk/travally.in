@@ -21,8 +21,6 @@ class ProfileController extends BaseController
         $this->ProfileTransformer = new ProfileTransformer();
         $this->middleware('oauth');
     }
-
-
     /**
      * Display the specified resource.
      * @return \Illuminate\Http\Response

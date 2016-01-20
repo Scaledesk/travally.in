@@ -18,7 +18,6 @@ Route::get('/', function () {
 Route::post('auth/a', function() {
     return Response::json('a');
 });
-
     //Registration Routes
     Route::post('auth/register', 'Auth\RegistrationController@register');
 //    Route::get('register/verify/{confirmationCode}', 'Auth\RegistrationController@confirm');
@@ -34,4 +33,3 @@ Route::post('auth/a', function() {
     Route::post('forgotPassword', 'Auth\RegistrationController@forgotPassword');
     Route::post('resetForgotPassword', 'Auth\RegistrationController@resetPassword');
     Route::resource('adv','AdvController');
-
