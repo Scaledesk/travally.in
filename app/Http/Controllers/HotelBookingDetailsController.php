@@ -1,19 +1,32 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: Javed
+ * Date: 17/02/16
+ * Time: 12:30 PM
+ */
 namespace App\Http\Controllers;
 
+use app\Libraries\Transformer\HotelBookingDetailsTransformer;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
+use App\Libraries\Transformer;
+use App\HotelBookingDetails;
 use Illuminate\Support\Facades\Validator;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
-=======
->>>>>>> parent of 11e34d6... added booking flight details transformer and make one to many relationship between user and booking flight details
 
-class FlightBookingDetailsController extends Controller
+class HotelBookingDetailsController extends BaseController
 {
+
+
+    protected $HotelBookingDetailsTransformer;
+    function __construct()
+    {
+        $this->HotelBookingDetailsTransformer = new HotelBookingDetailsTransformer();
+        $this->middleware('oauth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,16 +35,12 @@ class FlightBookingDetailsController extends Controller
     public function index()
     {
         //
-<<<<<<< HEAD
+
         $user_id=Authorizer::getResourceOwnerId(); // the token user_id
-        $flightBookingDetails = User::find($user_id)->flightBookingDetails()->get();
-        return $this->respond($this->FlightBookingDetailsTransformer->transformCollection($flightBookingDetails->toArray()));
-        //return User::find($user_id)->flightBookingDetails()->get();
-=======
->>>>>>> parent of 11e34d6... added booking flight details transformer and make one to many relationship between user and booking flight details
+        $hotelBookingDetails = User::find($user_id)->HotelBookingDetails()->get();
+        return $this->respond($this->HotelBookingDetailsTransformer->transformCollection($hotelBookingDetails->toArray()));
     }
-//travally_user_flight_booking_details_source
-//travally_user_flight_booking_details_source
+
     /**
      * Show the form for creating a new resource.
      *
@@ -51,6 +60,8 @@ class FlightBookingDetailsController extends Controller
     public function store(Request $request)
     {
         //
+
+
     }
 
     /**
