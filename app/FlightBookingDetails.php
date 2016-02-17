@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FlightBookingDetails extends Model
 {
-<<<<<<< HEAD
     /**
      *
      */
@@ -46,7 +45,4 @@ class FlightBookingDetails extends Model
 
 
 
-=======
-    //
->>>>>>> parent of 11e34d6... added booking flight details transformer and make one to many relationship between user and booking flight details
 }

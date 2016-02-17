@@ -61,7 +61,7 @@ class HotelBookingDetailsController extends BaseController
     {
         //
 
-
+        
     }
 
     /**
