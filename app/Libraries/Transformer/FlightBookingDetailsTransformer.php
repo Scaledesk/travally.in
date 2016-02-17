@@ -16,6 +16,7 @@ class FlightBookingDetailsTransformer extends Transformer
     public function transform($data){
         return [
             'source'=>$data[FlightBookingDetails::SOURCE],
+            'source_value'=>$data[FlightBookingDetails::SOURCE_VALUE],
             'destination'=>$data[FlightBookingDetails::DESTINATION],
             'departure_date'=>$data[FlightBookingDetails::DEPARTURE_DATE],
             'booking_id'=>$data[FlightBookingDetails::BOOKING_ID],
@@ -39,6 +40,7 @@ class FlightBookingDetailsTransformer extends Transformer
             FlightBookingDetails::STATUS_DESCRIPTION => Input::get('status_description',''),
             FlightBookingDetails::STATUS_CATEGORY => Input::get('status_category',''),
             FlightBookingDetails::SOURCE => Input::get('source',''),
+            FlightBookingDetails::SOURCE_VALUE => Input::get('source_value',''),
             FlightBookingDetails::DESTINATION => Input::get('destination',''),
             FlightBookingDetails::DEPARTURE_DATE => Input::get('departure_date',''),
             FlightBookingDetails::USER_ID => Input::get('user_id','')

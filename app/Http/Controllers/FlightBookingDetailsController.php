@@ -78,7 +78,8 @@ class FlightBookingDetailsController extends BaseController
                 FlightBookingDetails::DESTINATION.'.required'=>'Destination is required try destination=<destination>',
                 FlightBookingDetails::BOOKING_ID.'.required'=>'Booking id  is required try booking_id=<booking_id>',
                 FlightBookingDetails::PNR.'.required'=>'PNR is required try pnr=<pnr>',
-                FlightBookingDetails::DEPARTURE_DATE.'.required'=>'Departure date is required try departure_date=<departure_date>'
+                FlightBookingDetails::DEPARTURE_DATE.'.required'=>'Departure date is required try departure_date=<departure_date>',
+                FlightBookingDetails::SOURCE_VALUE.'.required'=>'Source Value is required try source_value=<source_value>'
             ]);
 
         if($validator->passes()){

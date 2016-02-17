@@ -26,6 +26,7 @@ class FlightBookingDetails extends Model
     const STATUS_DESCRIPTION = 'travally_user_flight_booking_details_status_description';
     const STATUS_CATEGORY = 'travally_user_flight_booking_details_status_category';
     const SOURCE = 'travally_user_flight_booking_details_source';
+    const SOURCE_VALUE = 'travally_user_flight_booking_details_source_value';
     const DESTINATION = 'travally_user_flight_booking_details_destination';
     const DEPARTURE_DATE = 'travally_user_flight_booking_details_departure_date';
     const USER_ID = 'user_id';
@@ -35,7 +36,7 @@ class FlightBookingDetails extends Model
     protected $fillable=[self::PNR,self::AIRLINE,self::BOOKING_ID,self::SSR_DENIED,
         self::SSR_MESSAGE,self::SSR_PROD_TYPE,self::CONFIRMATION_NO,self::PAYMENT_REFERENCE_NO,
         self::REF_ID,self::STATUS_CODE,self::STATUS_DESCRIPTION,self::STATUS_CATEGORY,
-        self::SOURCE,self::DESTINATION,self::DEPARTURE_DATE,self::USER_ID];
+        self::SOURCE,self::DESTINATION,self::DEPARTURE_DATE,self::USER_ID,self::SOURCE_VALUE];
     public $timestamps=true;
 
     public function user()
