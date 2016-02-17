@@ -11,6 +11,7 @@ use app\Libraries\Transformer\HotelBookingDetailsTransformer;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
 use App\Libraries\Transformer;
 use App\HotelBookingDetails;
 use Illuminate\Support\Facades\Validator;
@@ -60,6 +61,27 @@ class HotelBookingDetailsController extends BaseController
     public function store(Request $request)
     {
         //
+
+        $data=$this->HotelBookingDetailsTransformer->requestAdaptor();
+        $user_id=Authorizer::getResourceOwnerId();
+        $data['user_id']=$user_id;
+        $validator=Validator::make($data,[
+            HotelBookingDetails::USER_ID=>'required',
+        ],
+            [
+                HotelBookingDetails::CITY.'.required'=>'City is required try city=<source>'
+            ]);
+
+        if($validator->passes()){
+            $insert=function($data){
+                $hotelBooking=new HotelBookingDetails($data);
+                return  $hotelBooking->save()?$this->respondCreated('Hotel booking saved successfully'):$this->respondValidationError('some error occurred');
+            };
+            return $insert($data);
+        }
+        else{
+            return $this->respondValidationError($validator->messages());
+        }
 
         
     }
