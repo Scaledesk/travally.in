@@ -30,7 +30,6 @@ class FlightBookingDetails extends Model
     const DESTINATION = 'travally_user_flight_booking_details_destination';
     const DEPARTURE_DATE = 'travally_user_flight_booking_details_departure_date';
     const USER_ID = 'user_id';
-
     protected $table=self::TABLE;
     protected $primaryKey=self::ID;
     protected $fillable=[self::PNR,self::AIRLINE,self::BOOKING_ID,self::SSR_DENIED,

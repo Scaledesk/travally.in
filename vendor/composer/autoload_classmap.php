@@ -27,6 +27,7 @@ return array(
     'CreateOauthSessionScopesTable' => $baseDir . '/database/migrations/2014_04_24_111109_create_oauth_session_scopes_table.php',
     'CreateOauthSessionsTable' => $baseDir . '/database/migrations/2014_04_24_111002_create_oauth_sessions_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateTravallyTransactionDetailsTable' => $baseDir . '/database/migrations/2016_02_19_122258_create_travally_transaction_details_table.php',
     'CreateTravallyUserFlightBookingDetailsTable' => $baseDir . '/database/migrations/2016_01_20_064123_create_travally_user_flight_booking_details_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

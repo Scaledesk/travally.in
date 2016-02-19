@@ -27,7 +27,6 @@ class FlightBookingDetailsController extends BaseController
 
 
 
-
     /**
      * Display a listing of the resource.
      *
