@@ -41,3 +41,12 @@ Route::post('auth/a', function() {
 Route::post("bookingPayment/success",'TransactionDetailsController@paymentSuccessFunction');
 Route::post("bookingPayment/failure",'TransactionDetailsController@paymentFailedFunction');
 Route::post("bookingPayment/cancel",'TransactionDetailsController@paymentCancelFunction');
+
+
+
+/*//Payment Routes
+Route::get("payBookingAmount/{transactionId}",'BookingController@payBookingAmount');
+Route::post("payBookingAmount",'BookingController@payBookingAmount');
+Route::post("bookingAmountPayment/success",'BookingController@bookingAmountPaymentSuccess');
+Route::post("bookingAmountPayment/failure",'BookingController@bookingAmountPaymentFailure');
+Route::post("bookingAmountPayment/cancel",'BookingController@bookingAmountPaymentCancel');*/

@@ -75,19 +75,21 @@ class TransactionDetailsController extends BaseController
 
             $transaction = TransactionDetails::create($data);
             //return $transaction;
-
-            //$transaction = Transaction::find($transactionId);
+            $user = User::find($user_id);
+            //dd($user->profiles->toArray());
             $data = [];
+            $data['user'] = $user->profiles->toArray();
+            $data['user']['email'] = $user->email;
             $data['transaction'] = $transaction->toArray();
             //$data['booking'] = $transaction->booking;
             //$data['buyer'] = $transaction->booking->buyer->userProfiles->toArray();
             //$data['buyer']['email'] = $transaction->booking->buyer->email;
-            $data['callbacks']['success'] = getenv('SERVER_ADDRESS').'/bookingPayment/success';
-            $data['callbacks']['failure'] = getenv('SERVER_ADDRESS').'/bookingPayment/failure';
-            $data['callbacks']['cancel'] = getenv('SERVER_ADDRESS').'/bookingPayment/cancel';
-            return view('payment.payBookingAmount',$data);
+            $data['callbacks']['success'] = 'http://localhost:8000/bookingPayment/success';
+            $data['callbacks']['failure'] = 'http://localhost:8000/bookingPayment/failure';
+            $data['callbacks']['cancel'] = 'http://localhost:8000/bookingPayment/cancel';
+            return view('payment.payment',$data);
 
-
+            /*getenv('SERVER_ADDRESS').*/
             /*$insert=function($data){
                 $transaction=new TransactionDetails($data);
                 return  $transaction->save()?$this->respondCreated('transaction details saved successfully'):$this->respondValidationError('some error occurred');
@@ -145,6 +147,42 @@ class TransactionDetailsController extends BaseController
     }
 
     public function paymentSuccessFunction(){
+
+
+        $status=$_POST["status"];
+        $firstname=$_POST["firstname"];
+        $amount=$_POST["amount"];
+        $txnid=$_POST["txnid"];
+        $posted_hash=$_POST["hash"];
+        $key=$_POST["key"];
+        $productinfo=$_POST["productinfo"];
+
+        $email=$_POST["email"];
+        $salt="eCwWELxi";
+
+        $transaction = TransactionDetails::findOrFail($txnid);
+        $transaction->status = $status;
+        $transaction->save();
+
+        If (isset($_POST["additionalCharges"])) {
+            $additionalCharges=$_POST["additionalCharges"];
+            $retHashSeq = $additionalCharges.'|'.$salt.'|'.$status.'|||||||||||'.$email.'|'.$firstname.'|'.$productinfo.'|'.$amount.'|'.$txnid.'|'.$key;
+
+        }
+        else {
+
+            $retHashSeq = $salt.'|'.$status.'|||||||||||'.$email.'|'.$firstname.'|'.$productinfo.'|'.$amount.'|'.$txnid.'|'.$key;
+
+        }
+        $hash = hash("sha512", $retHashSeq);
+
+        if ($hash != $posted_hash) {
+            echo "Invalid Transaction. Please try again";
+        }
+        else {
+
+        }
+
 
     }
     public function paymentFailedFunction(){
