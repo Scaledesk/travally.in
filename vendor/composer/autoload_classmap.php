@@ -6,9 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AddBookingRequestDataToTravallyTransactionDetailsTable' => $baseDir . '/database/migrations/2016_02_22_092732_add_booking_request_data_to_travally_transaction_details_table.php',
     'AddProfilesTable' => $baseDir . '/database/migrations/2015_12_14_094354_add_profiles_table.php',
     'AddSocialFieldToUserTable' => $baseDir . '/database/migrations/2015_12_16_095421_add_social_field_to_user_table.php',
     'AddSourceValueToFlightBookingDetailsTable' => $baseDir . '/database/migrations/2016_02_17_135846_add_source_value_to_flight_booking_details_table.php',
+    'AddTxnIdToTravallyTransactionDetailsTable' => $baseDir . '/database/migrations/2016_02_22_130648_add_txnId_to_travally_transaction_details_table.php',
     'CreateAdvsTable' => $baseDir . '/database/migrations/2015_12_11_103553_create_advs_table.php',
     'CreateBusBookingDetailsTable' => $baseDir . '/database/migrations/2016_02_16_130603_create_bus_booking_details_table.php',
     'CreateHotelBookingDetailsTable' => $baseDir . '/database/migrations/2016_02_17_070101_create_hotel_booking_details_table.php',

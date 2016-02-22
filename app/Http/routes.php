@@ -34,7 +34,6 @@ Route::post('auth/a', function() {
     Route::post('resetForgotPassword', 'Auth\RegistrationController@resetPassword');
     Route::get('getFlightBookingDetails', 'FlightBookingDetailsController@index');
     Route::post('addFlightBooking', 'FlightBookingDetailsController@store');
-    Route::post('addTransaction', 'TransactionDetailsController@store');
     Route::resource('adv','AdvController');
 
 
@@ -42,7 +41,8 @@ Route::post("bookingPayment/success",'TransactionDetailsController@paymentSucces
 Route::post("bookingPayment/failure",'TransactionDetailsController@paymentFailedFunction');
 Route::post("bookingPayment/cancel",'TransactionDetailsController@paymentCancelFunction');
 
-
+Route::post('addTransaction', 'TransactionDetailsController@store');
+Route::get("bookingPayment/{id}",'TransactionDetailsController@payBookingAmount');
 
 /*//Payment Routes
 Route::get("payBookingAmount/{transactionId}",'BookingController@payBookingAmount');

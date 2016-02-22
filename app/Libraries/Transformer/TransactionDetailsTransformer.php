@@ -15,6 +15,8 @@ class TransactionDetailsTransformer extends Transformer
 {
     public function transform($data){
         return [
+            'id'=>$data[TransactionDetails::ID],
+            'txn_id'=>$data[TransactionDetails::TXN_ID],
             'type'=>$data[TransactionDetails::TYPE],
             'Amount'=>$data[TransactionDetails::AMOUNT],
             'status'=>$data[TransactionDetails::STATUS]
@@ -25,6 +27,8 @@ class TransactionDetailsTransformer extends Transformer
             TransactionDetails::TYPE => Input::get('type',''),
             TransactionDetails::AMOUNT => Input::get('amount',''),
             TransactionDetails::STATUS => Input::get('status',''),
+            TransactionDetails::BOOKING_REQUEST => json_encode(Input::get('booking_request','')),
         ];
+        //json_encode
     }
 }

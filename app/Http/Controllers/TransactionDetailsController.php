@@ -59,11 +59,14 @@ class TransactionDetailsController extends BaseController
         //
         $data=$this->TransactionDetailsTransformer->requestAdaptor();
         $user_id=Authorizer::getResourceOwnerId();
+        $string = str_random(40);
         $data['user_id']=$user_id;
+        $data['travally_transaction_details_txn_id'] = $string;
         $validator=Validator::make($data,[
             TransactionDetails::TYPE=>'required',
             TransactionDetails::AMOUNT=>'required',
-            TransactionDetails::STATUS=>'required'
+            TransactionDetails::STATUS=>'required',
+            TransactionDetails::BOOKING_REQUEST=>'required'
         ],
             [
                 TransactionDetails::TYPE.'.required'=>'Transaction type is required try type=<type_value>'
@@ -73,7 +76,7 @@ class TransactionDetailsController extends BaseController
 
 
 
-            $transaction = TransactionDetails::create($data);
+            /*$transaction = TransactionDetails::create($data);
             //return $transaction;
             $user = User::find($user_id);
             //dd($user->profiles->toArray());
@@ -87,14 +90,16 @@ class TransactionDetailsController extends BaseController
             $data['callbacks']['success'] = 'http://localhost:8000/bookingPayment/success';
             $data['callbacks']['failure'] = 'http://localhost:8000/bookingPayment/failure';
             $data['callbacks']['cancel'] = 'http://localhost:8000/bookingPayment/cancel';
-            return view('payment.payment',$data);
-
+            return view('payment.payment',$data);*/
             /*getenv('SERVER_ADDRESS').*/
-            /*$insert=function($data){
-                $transaction=new TransactionDetails($data);
-                return  $transaction->save()?$this->respondCreated('transaction details saved successfully'):$this->respondValidationError('some error occurred');
+
+            $insert=function($data){
+                //$transaction=new TransactionDetails($data);
+                $transaction = TransactionDetails::create($data);
+                return $this->respond($this->TransactionDetailsTransformer->transform($transaction));
+                //return  $transaction->save()?$this->respondCreated('transaction details saved successfully'):$this->respondValidationError('some error occurred');
             };
-            return $insert($data);*/
+            return $insert($data);
         }
         else{
             return $this->respondValidationError($validator->messages());
@@ -146,6 +151,40 @@ class TransactionDetailsController extends BaseController
         //
     }
 
+    public function payBookingAmount($id){
+
+        /*$data = [];
+        $data['transaction'] = $transaction->toArray();
+        $data['booking'] = $transaction->booking;
+        $data['buyer'] = $transaction->booking->buyer->userProfiles->toArray();
+        $data['buyer']['email'] = $transaction->booking->buyer->email;
+        $data['callbacks']['success'] = getenv('SERVER_ADDRESS').'/bookingAmountPayment/success';
+        $data['callbacks']['failure'] = getenv('SERVER_ADDRESS').'/bookingAmountPayment/failure';
+        $data['callbacks']['cancel'] = getenv('SERVER_ADDRESS').'/bookingAmountPayment/cancel';
+        return view('payment.payBookingAmount',$data);*/
+
+
+
+        $transaction = TransactionDetails::find($id);
+        $user_id=Authorizer::getResourceOwnerId();
+        $user = User::find($user_id);
+        //dd($user->profiles->toArray());
+        $data = [];
+        $data['user'] = $user->profiles->toArray();
+        $data['user']['email'] = $user->email;
+        $data['transaction'] = $transaction->toArray();
+        //$data['booking'] = $transaction->booking;
+        //$data['buyer'] = $transaction->booking->buyer->userProfiles->toArray();
+        //$data['buyer']['email'] = $transaction->booking->buyer->email;
+        $data['callbacks']['success'] = 'http://localhost:8000/bookingPayment/success';
+        $data['callbacks']['failure'] = 'http://localhost:8000/bookingPayment/failure';
+        $data['callbacks']['cancel'] = 'http://localhost:8000/bookingPayment/cancel';
+        return view('payment.payment',$data);
+    }
+
+
+
+
     public function paymentSuccessFunction(){
 
 
@@ -180,7 +219,12 @@ class TransactionDetailsController extends BaseController
             echo "Invalid Transaction. Please try again";
         }
         else {
-
+            ?>
+            <script>
+                window.location.assign("http://www.gozolo.in/#/payment_success");
+            </script>
+            <?php
+            header('Location:http://www.gozolo.in/#/payment_success');
         }
 
 
