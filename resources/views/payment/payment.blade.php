@@ -14,7 +14,7 @@ $furl = $callbacks['failure'];
 $curl = $callbacks['cancel'];
 
 
-$hash = hash('sha512',$key.'|'.$transaction['travally_transaction_details_txn_id'].'|'.$transaction['travally_transaction_details_amount'].'|'.$transaction['travally_transaction_details_txn_id'].'|'.$user['travally_profiles_name'].'|'.$user['email'].'|||||||||||'.$salt);?>
+$hash = hash('sha512',$key.'|'.$transaction['travally_transaction_details_txn_id'].'|'.$transaction['travally_transaction_details_amount'].'|'.$transaction['travally_transaction_details_id'].'|'.$user['travally_profiles_name'].'|'.$user['email'].'|||||||||||'.$salt);?>
 
     <form id="myform" action='https://test.payu.in/_payment' method='post'>
     <input type="hidden" name="firstname" value="<?php echo $user['travally_profiles_name'] ?>" /><br/>
@@ -26,7 +26,7 @@ $hash = hash('sha512',$key.'|'.$transaction['travally_transaction_details_txn_id
     <input type="hidden" name="curl" value="<?php echo $curl; ?>" />
     <input type="hidden" name="furl" value="<?php echo $furl; ?>" />
     <input type="hidden" name="txnid" value="<?php echo $transaction['travally_transaction_details_txn_id']; ?>" />
-    <input type="hidden" name="productinfo" value="<?php echo $transaction['travally_transaction_details_txn_id']; ?>" />
+    <input type="hidden" name="productinfo" value="<?php echo $transaction['travally_transaction_details_id']; ?>" />
     <input type="hidden" name="amount" value="<?php echo $transaction['travally_transaction_details_amount']; ?>" /><br/>
     <input type="hidden" name="email" value="<?php echo $user['email'] ?>" /><br/>
 </form>

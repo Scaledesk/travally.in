@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use GuzzleHttp\Client;
 use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -21,7 +21,7 @@ class TransactionDetailsController extends BaseController
     function __construct()
     {
         $this->TransactionDetailsTransformer = new TransactionDetailsTransformer();
-        $this->middleware('oauth');
+        $this->middleware('oauth',['except'=>['paymentSuccessFunction']]);
     }
 
 
@@ -115,6 +115,8 @@ class TransactionDetailsController extends BaseController
     public function show($id)
     {
         //
+        $transaction = TransactionDetails::find($id);
+        return $this->respond($this->TransactionDetailsTransformer->transform($transaction));
     }
 
     /**
@@ -186,8 +188,7 @@ class TransactionDetailsController extends BaseController
 
 
     public function paymentSuccessFunction(){
-
-
+        //dd($_POST);
         $status=$_POST["status"];
         $firstname=$_POST["firstname"];
         $amount=$_POST["amount"];
@@ -195,41 +196,49 @@ class TransactionDetailsController extends BaseController
         $posted_hash=$_POST["hash"];
         $key=$_POST["key"];
         $productinfo=$_POST["productinfo"];
-
         $email=$_POST["email"];
         $salt="eCwWELxi";
-
-        $transaction = TransactionDetails::findOrFail($txnid);
-        $transaction->status = $status;
+        $transaction = TransactionDetails::findOrFail($productinfo);
+        $transaction->travally_transaction_details_status = $status;
         $transaction->save();
 
         If (isset($_POST["additionalCharges"])) {
             $additionalCharges=$_POST["additionalCharges"];
             $retHashSeq = $additionalCharges.'|'.$salt.'|'.$status.'|||||||||||'.$email.'|'.$firstname.'|'.$productinfo.'|'.$amount.'|'.$txnid.'|'.$key;
-
         }
         else {
-
             $retHashSeq = $salt.'|'.$status.'|||||||||||'.$email.'|'.$firstname.'|'.$productinfo.'|'.$amount.'|'.$txnid.'|'.$key;
-
         }
         $hash = hash("sha512", $retHashSeq);
-
         if ($hash != $posted_hash) {
             echo "Invalid Transaction. Please try again";
         }
         else {
+echo "success";
+            /*$client = new Client();
+            $res = $client->post('https://api.github.com/user', ['auth' =>  ['user', 'pass']]);
+            echo $res->getStatusCode(); // 200
+            echo $res->getBody();*/
             ?>
             <script>
-                window.location.assign("http://www.gozolo.in/#/payment_success");
+                window.location="http://localhost:3000/#/payment_success/<?=$transaction->travally_transaction_details_id?>";
+                //window.location.assign("http://www.localhost:3000/#/payment_success/");
             </script>
             <?php
-            header('Location:http://www.gozolo.in/#/payment_success');
+            header("Location:http://www.localhost:3000/#/payment_success/$transaction->id");
+
+         //   return redirect('Location:http://www.localhost:3000/#/payment_success/'.$transaction->id);
+            //header('Location:http://www.localhost:3000/#/payment_success/'.$transaction->id);
         }
+}
 
-
-    }
     public function paymentFailedFunction(){
+        ?>
+        <script>
+            window.location.assign("http://www.gozolo.in/#/payment_success");
+        </script>
+        <?php
+        header('Location:http://www.gozolo.in/#/payment_success');
 
     }
     public function paymentCancelFunction(){

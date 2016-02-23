@@ -9,7 +9,7 @@
         "laravel/framework": "5.1.*",
         "lucadegasperi/oauth2-server-laravel": "5.0.*",
         "barryvdh/laravel-cors": "0.7.x",
-        "guzzlehttp/guzzle" : "^6.1",
+        "guzzlehttp/guzzle" : "~6.0",
         "laravel/socialite": "2.0.*@dev",
         "doctrine/dbal":"^2.5"
     },

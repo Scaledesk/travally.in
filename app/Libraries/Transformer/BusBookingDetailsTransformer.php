@@ -34,8 +34,7 @@ class BusBookingDetailsTransformer extends Transformer
             BusBookingDetails::DESCRIPTION => Input::get('description',''),
             BusBookingDetails::SOURCE => Input::get('source',''),
             BusBookingDetails::DESTINATION => Input::get('destination',''),
-            BusBookingDetails::DEPARTURE_DATE => Input::get('departure_date',''),
-
+            BusBookingDetails::DEPARTURE_DATE => Input::get('departure_date','')
         ];
     }
 }

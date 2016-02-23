@@ -19,7 +19,8 @@ class TransactionDetailsTransformer extends Transformer
             'txn_id'=>$data[TransactionDetails::TXN_ID],
             'type'=>$data[TransactionDetails::TYPE],
             'Amount'=>$data[TransactionDetails::AMOUNT],
-            'status'=>$data[TransactionDetails::STATUS]
+            'status'=>$data[TransactionDetails::STATUS],
+            'booking_request'=>json_decode($data[TransactionDetails::BOOKING_REQUEST])
         ];
     }
     public function requestAdaptor(){
