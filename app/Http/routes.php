@@ -42,7 +42,7 @@ Route::post('addBusBooking', 'BusBookingDetailsController@store');
 
     Route::resource('adv','AdvController');
 
-
+//Payment Routes
 Route::post("bookingPayment/success",'TransactionDetailsController@paymentSuccessFunction');
 Route::post("bookingPayment/failure",'TransactionDetailsController@paymentFailedFunction');
 Route::post("bookingPayment/cancel",'TransactionDetailsController@paymentCancelFunction');
@@ -50,10 +50,3 @@ Route::post("bookingPayment/cancel",'TransactionDetailsController@paymentCancelF
 Route::post('addTransaction', 'TransactionDetailsController@store');
 Route::get('getTransaction/{id}', 'TransactionDetailsController@show');
 Route::get("bookingPayment/{id}",'TransactionDetailsController@payBookingAmount');
-
-/*//Payment Routes
-Route::get("payBookingAmount/{transactionId}",'BookingController@payBookingAmount');
-Route::post("payBookingAmount",'BookingController@payBookingAmount');
-Route::post("bookingAmountPayment/success",'BookingController@bookingAmountPaymentSuccess');
-Route::post("bookingAmountPayment/failure",'BookingController@bookingAmountPaymentFailure');
-Route::post("bookingAmountPayment/cancel",'BookingController@bookingAmountPaymentCancel');*/
