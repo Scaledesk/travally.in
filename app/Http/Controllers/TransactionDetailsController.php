@@ -214,21 +214,41 @@ class TransactionDetailsController extends BaseController
             echo "Invalid Transaction. Please try again";
         }
         else {
-echo "success";
+
             /*$client = new Client();
             $res = $client->post('https://api.github.com/user', ['auth' =>  ['user', 'pass']]);
             echo $res->getStatusCode(); // 200
             echo $res->getBody();*/
-            ?>
-            <script>
-                window.location="http://localhost:3000/#/payment_success/<?=$transaction->travally_transaction_details_id?>";
-                //window.location.assign("http://www.localhost:3000/#/payment_success/");
-            </script>
-            <?php
-            header("Location:http://www.localhost:3000/#/payment_success/$transaction->id");
 
-         //   return redirect('Location:http://www.localhost:3000/#/payment_success/'.$transaction->id);
-            //header('Location:http://www.localhost:3000/#/payment_success/'.$transaction->id);
+
+            if($transaction->travally_transaction_details_type=='Bus Booking') {
+                ?>
+                <script>
+                    window.location = "http://localhost:3000/#/payment_success/<?=$transaction->travally_transaction_details_id?>";
+                    //window.location.assign("http://www.localhost:3000/#/payment_success/");
+                </script>
+                <?php
+            }
+
+
+            if($transaction->travally_transaction_details_type=='flight_booking_lcc' || $transaction->travally_transaction_details_type=='flight_booking') {
+
+
+                            /*$book = new Client();
+                            $res = $book->post('https://api.github.com/user', []);
+                            echo $res->getStatusCode(); // 200
+                            echo $res->getBody();*/
+
+                ?>
+                <script>
+                    window.location = "http://localhost:3000/#/flight_booking_payment_success/<?=$transaction->travally_transaction_details_id?>";
+                    //window.location.assign("http://www.localhost:3000/#/payment_success/");
+                </script>
+                <?php
+
+            }
+
+            //header('Location:http://localhost:3000/#/payment_success/'.$transaction->id);
         }
 }
 
