@@ -15,9 +15,11 @@ class BusBookingDetailsTransformer extends Transformer
 {
     public function transform($data){
         return [
+            'id'=>$data[BusBookingDetails::ID],
             'source'=>$data[BusBookingDetails::SOURCE],
             'destination'=>$data[BusBookingDetails::DESTINATION],
             'departure_date'=>$data[BusBookingDetails::DEPARTURE_DATE],
+            'status'=>$data[BusBookingDetails::STATUS],
             'ticket_no'=>$data[BusBookingDetails::TICKET_NO],
             'description'=>$data[BusBookingDetails::DESCRIPTION],
             'travel_operator'=>$data[BusBookingDetails::TRAVEL_OPERATOR],

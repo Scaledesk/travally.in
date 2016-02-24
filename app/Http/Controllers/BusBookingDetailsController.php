@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\User;
 use App\Libraries\Transformer\BusBookingDetailsTransformer;
 use App\BusBookingDetails;
 use App\Http\Controllers\Controller;
@@ -33,7 +34,6 @@ class BusBookingDetailsController extends BaseController
     public function index()
     {
         //
-
         $user_id=Authorizer::getResourceOwnerId(); // the token user_id
         $busBookingDetails = User::find($user_id)->busBookingDetails()->get();
         return $this->respond($this->BusBookingDetailsTransformer->transformCollection($busBookingDetails->toArray()));

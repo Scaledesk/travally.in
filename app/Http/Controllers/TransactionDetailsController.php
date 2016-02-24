@@ -229,29 +229,21 @@ class TransactionDetailsController extends BaseController
                 </script>
                 <?php
             }
-
-
             if($transaction->travally_transaction_details_type=='flight_booking_lcc' || $transaction->travally_transaction_details_type=='flight_booking') {
-
-
                             /*$book = new Client();
                             $res = $book->post('https://api.github.com/user', []);
                             echo $res->getStatusCode(); // 200
                             echo $res->getBody();*/
-
                 ?>
                 <script>
                     window.location = "http://localhost:3000/#/flight_booking_payment_success/<?=$transaction->travally_transaction_details_id?>";
                     //window.location.assign("http://www.localhost:3000/#/payment_success/");
                 </script>
                 <?php
-
             }
-
             //header('Location:http://localhost:3000/#/payment_success/'.$transaction->id);
         }
 }
-
     public function paymentFailedFunction(){
         ?>
         <script>
