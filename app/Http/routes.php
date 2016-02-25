@@ -38,7 +38,9 @@ Route::post('auth/a', function() {
 
 Route::get('getBusBookingDetails', 'BusBookingDetailsController@index');
 Route::post('addBusBooking', 'BusBookingDetailsController@store');
-
+// Cancellation Details
+Route::get('getCancellation', 'CancellationDetailsController@index');
+Route::post('addCancellation', 'CancellationDetailsController@store');
 
     Route::resource('adv','AdvController');
 

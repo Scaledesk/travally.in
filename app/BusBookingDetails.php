@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class BusBookingDetails extends Model
 {
     //
-
     const TABLE = 'travally_user_bus_booking_details';
     const ID = 'travally_user_bus_booking_details_id';
     const TICKET_NO = 'travally_user_bus_booking_details_ticket_no';
