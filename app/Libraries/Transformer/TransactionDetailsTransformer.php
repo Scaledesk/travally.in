@@ -20,7 +20,15 @@ class TransactionDetailsTransformer extends Transformer
             'type'=>$data[TransactionDetails::TYPE],
             'Amount'=>$data[TransactionDetails::AMOUNT],
             'status'=>$data[TransactionDetails::STATUS],
-            'booking_request'=>json_decode($data[TransactionDetails::BOOKING_REQUEST])
+            'booking_request'=>json_decode($data[TransactionDetails::BOOKING_REQUEST]),
+
+            'net_debit_amount'=>$data[TransactionDetails::NET_DEBIT_AMOUNT],
+            'payment_source'=>$data[TransactionDetails::PAYMENT_SOURCE],
+            'payment_mode'=>$data[TransactionDetails::PAYMENT_MODE],
+            'card_type'=>$data[TransactionDetails::CARD_TYPE],
+            'card_num'=>$data[TransactionDetails::CARD_NUM],
+            'bank_ref_number'=>$data[TransactionDetails::BANK_REF_NUM],
+            'bank_code'=>$data[TransactionDetails::BANK_CODE],
         ];
     }
     public function requestAdaptor(){

@@ -188,7 +188,7 @@ class TransactionDetailsController extends BaseController
 
 
     public function paymentSuccessFunction(){
-        //dd($_POST);
+       // dd($_POST);
         $status=$_POST["status"];
         $firstname=$_POST["firstname"];
         $amount=$_POST["amount"];
@@ -200,6 +200,15 @@ class TransactionDetailsController extends BaseController
         $salt="eCwWELxi";
         $transaction = TransactionDetails::findOrFail($productinfo);
         $transaction->travally_transaction_details_status = $status;
+
+        $transaction->travally_transaction_details_net_amount_debit = $_POST['net_amount_debit'];
+        $transaction->travally_transaction_details_payment_source = $_POST['payment_source'];
+        $transaction->travally_transaction_details_payment_mode = $_POST['mode'];
+        $transaction->travally_transaction_details_card_type = $_POST['card_type'];
+        $transaction->travally_transaction_details_card_num = $_POST['cardnum'];
+        $transaction->travally_transaction_details_bank_ref_number = $_POST['bank_ref_num'];
+        $transaction->travally_transaction_details_bank_code = $_POST['bankcode'];
+
         $transaction->save();
 
         If (isset($_POST["additionalCharges"])) {

@@ -10,6 +10,7 @@ return array(
     'AddProfilesTable' => $baseDir . '/database/migrations/2015_12_14_094354_add_profiles_table.php',
     'AddSocialFieldToUserTable' => $baseDir . '/database/migrations/2015_12_16_095421_add_social_field_to_user_table.php',
     'AddSourceValueToFlightBookingDetailsTable' => $baseDir . '/database/migrations/2016_02_17_135846_add_source_value_to_flight_booking_details_table.php',
+    'AddTransactionDetailsToTravallyTransactionDetailsTable' => $baseDir . '/database/migrations/2016_02_26_091432_add_transaction_details_to_travally_transaction_details_table.php',
     'AddTxnIdToTravallyTransactionDetailsTable' => $baseDir . '/database/migrations/2016_02_22_130648_add_txnId_to_travally_transaction_details_table.php',
     'CreateAdvsTable' => $baseDir . '/database/migrations/2015_12_11_103553_create_advs_table.php',
     'CreateBusBookingDetailsTable' => $baseDir . '/database/migrations/2016_02_16_130603_create_bus_booking_details_table.php',
