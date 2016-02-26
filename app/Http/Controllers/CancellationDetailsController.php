@@ -58,12 +58,10 @@ class CancellationDetailsController extends BaseController
         $validator=Validator::make($data,[
             CancellationDetails::STATUS=>'required',
             CancellationDetails::TYPE=>'required',
-            CancellationDetails::CANCELLATION_ID=>'required'
         ],
             [
                 CancellationDetails::STATUS.'.required'=>'Status is required try status=<status>',
                 CancellationDetails::TYPE.'.required'=>'Type is required try type=<type>',
-                CancellationDetails::CANCELLATION_ID.'.required'=>'Cancellation ID is required try cancellation_id=<cancellation_id>'
             ]);
 
         if($validator->passes()){
