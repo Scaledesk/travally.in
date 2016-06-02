@@ -583,7 +583,7 @@ class Request extends SymfonyRequest implements ArrayAccess
 
         $split = explode('/', $actual);
 
-        if (isset($split[1]) && preg_match('/'.$split[0].'\/.+\+'.$split[1].'/', $type)) {
+        if (isset($split[1]) && @preg_match('/'.$split[0].'\/.+\+'.$split[1].'/', $type)) {
             return true;
         }
 
@@ -798,7 +798,9 @@ class Request extends SymfonyRequest implements ArrayAccess
      */
     public function getUserResolver()
     {
-        return $this->userResolver ?: function () {};
+        return $this->userResolver ?: function () {
+            //
+        };
     }
 
     /**
@@ -821,7 +823,9 @@ class Request extends SymfonyRequest implements ArrayAccess
      */
     public function getRouteResolver()
     {
-        return $this->routeResolver ?: function () {};
+        return $this->routeResolver ?: function () {
+            //
+        };
     }
 
     /**

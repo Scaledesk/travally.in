@@ -124,7 +124,7 @@ abstract class AbstractProvider implements ProviderContract
     /**
      * Redirect the user of the application to the provider's authentication screen.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirect()
     {
@@ -194,6 +194,19 @@ abstract class AbstractProvider implements ProviderContract
         $user = $this->mapUserToObject($this->getUserByToken(
             $token = $this->getAccessToken($this->getCode())
         ));
+
+        return $user->setToken($token);
+    }
+
+    /**
+     * Get a Social User instance from a known access token.
+     *
+     * @param  string  $token
+     * @return \Laravel\Socialite\Two\User
+     */
+    public function userFromToken($token)
+    {
+        $user = $this->mapUserToObject($this->getUserByToken($token));
 
         return $user->setToken($token);
     }
